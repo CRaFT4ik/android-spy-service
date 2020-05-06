@@ -18,7 +18,6 @@ import androidx.annotation.Nullable;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.util.Set;
 
 import ru.er_log.spyservice.Settings;
 import ru.er_log.spyservice.network.DownloadManager;
@@ -48,7 +47,7 @@ public class DexLoader
         if (loadable == null)
             Log.e(Settings.LOG_TAG, "Can't load class: " + loadableClass);
         else
-            Log.d(Settings.LOG_TAG, "DEX classes loaded");
+            Log.d(Settings.LOG_TAG, "DEX successfully loaded");
     }
 
     /** If {@param callback} is null, then will used synchronized method. */

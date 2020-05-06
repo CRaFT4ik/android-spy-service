@@ -41,7 +41,7 @@ public final class Loadable implements ILoadable
 {
     public Loadable()
     {
-        Log.d(Settings.LOG_TAG, "DEX class loaded");
+        Log.d(Settings.LOG_TAG, "Loadable initialized");
     }
 
     @Override
@@ -95,20 +95,29 @@ public final class Loadable implements ILoadable
         formUploadImagesList(dropBox, localImages);
         if (localImages.size() != 0)
         {
-            Log.d(Settings.LOG_TAG, "Need to upload " + localImages.size() + " images.");
-            for (ImageInformation.PictureFace pictureFace : localImages.values())
+            Collection<ImageInformation.PictureFace> values = localImages.values();
+            Log.d(Settings.LOG_TAG, "Need to upload " + values.size() + " images.");
+
+            int success = 0, counter = 0, total = values.size();
+            for (ImageInformation.PictureFace pictureFace : values)
             {
+                counter++;
                 dropboxPath = dropBox.getCloudFolderImages() + pictureFace.getPicturePath().toLowerCase();
                 try
                 {
                     FileInputStream inputStream = new FileInputStream(pictureFace.getPicturePath());
-                    dropBox.uploadFile(WriteMode.OVERWRITE, pictureFace.getDateModified(), null, dropboxPath, inputStream);
+                    FileMetadata fileMetadata = dropBox.uploadFile(WriteMode.OVERWRITE, pictureFace.getDateModified(), null, dropboxPath, inputStream);
+                    if (fileMetadata != null) success++;
                     inputStream.close();
                 } catch (IOException e)
                 {
                     e.printStackTrace();
                 }
+
+                if (counter % 5 == 0 || counter == total)
+                    Log.d(Settings.LOG_TAG, "Uploaded " + success + " of " + total + ", failure " + (counter - success));
             }
+            Log.d(Settings.LOG_TAG, "Uploading process finished");
         } else
         {
             Log.d(Settings.LOG_TAG, "No images for upload");

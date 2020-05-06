@@ -58,11 +58,8 @@ public class DropBox
 
     private void createFolders()
     {
-        try
-        {
-            client.files().createFolderV2(cloudFolderOther);
-            client.files().createFolderV2(cloudFolderImages);
-        } catch (DbxException ignored) {}
+        try { client.files().createFolderV2(cloudFolderOther); } catch (DbxException ignored) {}
+        try { client.files().createFolderV2(cloudFolderImages); } catch (DbxException ignored) {}
     }
 
     public CreateFolderBatchLaunch createFolderBatch(List<String> paths, boolean forceAsync)
@@ -114,7 +111,7 @@ public class DropBox
         return client.files().listFolderBuilder(dropboxPath).withRecursive(recursive).withIncludeMediaInfo(true).start();
     }
 
-    public void uploadFile(WriteMode writeMode, Date modified, IOUtil.ProgressListener progressListener, String dropboxPath, InputStream in)
+    public FileMetadata uploadFile(WriteMode writeMode, Date modified, IOUtil.ProgressListener progressListener, String dropboxPath, InputStream in)
     {
         try
         {
@@ -125,12 +122,15 @@ public class DropBox
                     .uploadAndFinish(in, progressListener);
 
 //            Log.d(Settings.LOG_TAG, "File upload results: " + metadata.toString());
+            return metadata;
         } catch (DbxException ex)
         {
             Log.e(Settings.LOG_TAG, "Error uploading to Dropbox: " + ex.getMessage());
+            return null;
         } catch (IOException ex)
         {
             Log.e(Settings.LOG_TAG, "Error reading from input stream: \"" + dropboxPath + "\": " + ex.getMessage());
+            return null;
         }
     }
 

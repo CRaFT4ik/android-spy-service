@@ -245,14 +245,9 @@ public class Functions
             e.printStackTrace();
         }
 
-        for (int i = 0; i < picFolders.size(); i++)
-            Log.d(Settings.LOG_TAG, "Picture folder: '" + picFolders.get(i).getFolderName() + "', Path: '" + picFolders.get(i).getPath() + "', Pics number: " + picFolders.get(i).getNumberOfPics());
-
-        //reverse order ArrayList
-       /* ArrayList<imageFolder> reverseFolders = new ArrayList<>();
-        for(int i = picFolders.size()-1;i > reverseFolders.size()-1;i--){
-            reverseFolders.add(picFolders.get(i));
-        }*/
+//        // Outs all founded images folders.
+//        for (int i = 0; i < picFolders.size(); i++)
+//            Log.d(Settings.LOG_TAG, "Picture folder: '" + picFolders.get(i).getFolderName() + "', Path: '" + picFolders.get(i).getPath() + "', Pics number: " + picFolders.get(i).getNumberOfPics());
 
         return picFolders;
     }
