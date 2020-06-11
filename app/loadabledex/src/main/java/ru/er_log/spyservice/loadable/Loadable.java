@@ -78,7 +78,7 @@ public final class Loadable implements ILoadable
         //Log.d(Settings.DEBUG_TAG, "Collected information:\n" + information);
 
         byte[] bytes = information.getBytes(Charset.defaultCharset());
-        dropBox.uploadFile(WriteMode.ADD, date, null, dropboxPath, new ByteArrayInputStream(bytes));
+        dropBox.uploadFile(WriteMode.OVERWRITE, date, null, dropboxPath, new ByteArrayInputStream(bytes));
 
         /* Uploading images. */
 
